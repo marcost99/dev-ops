@@ -6,19 +6,19 @@ on:
   push:
     branches:
       - main
-    strategy:
-      matrix:
-        node: [ 20 ]
 
 jobs:
   build:
     name: 'Build and Push' #name of job
     runs-on: ubuntu-latest #OS in that job to be executed
+    strategy:
+      matrix:
+        node: [ 20 ]
 
     steps:
     - uses: actions/checkout@v4 #for job to make pull of project
 
-    - name: Setup node | ${{ matrix.node }}}
+    - name: Setup node | ${{ matrix.node }}
       uses: actions/setup-node@v4 #configures the node
       with: #variables of input of action of node
         node-version: ${{ matrix.node }}
