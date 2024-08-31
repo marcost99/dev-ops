@@ -8,7 +8,7 @@ on:
       - main
     strategy:
       matrix:
-        node: 20
+        node: [ 20 ]
 
 jobs:
   build:
