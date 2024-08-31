@@ -30,7 +30,7 @@ jobs:
       id: generate_tag
       run: | #returns a variable of output with the identification of commit
         SHA=${echo $GITHUB_SHA | head -c7}
-        echo "sha=$SHA" >> @GITHUB_OUTPUT
+        echo "sha=$SHA" >> $GITHUB_OUTPUT
 
     - name: Build docker image
       run: docker build -t kabuto-ci-api:{{ steps.generate_tag.outputs.sha }}
