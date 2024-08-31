@@ -33,4 +33,4 @@ jobs:
         echo "sha=$SHA" >> $GITHUB_OUTPUT
 
     - name: Build docker image
-      run: docker build -t kabuto-ci-api:{{ steps.generate_tag.outputs.sha }} .
+      run: docker build -t kabuto-ci-api:${{ steps.generate_tag.outputs.sha }} .
