@@ -1,1 +1,16 @@
+#sets the name of action
+name: CI
 
+#sets the moment in that job to be executed
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: 'Build and Push' #name of job
+    runs-on: ubuntu-latest #OS in that job to be executed
+
+    steps:
+    - uses: actions/checkout@v4 #for job to make pull of project
