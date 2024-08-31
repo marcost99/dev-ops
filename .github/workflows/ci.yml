@@ -40,8 +40,14 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build docker image
-      run: docker build -t marcostulio99ti/kabuto-ci-api:${{ steps.generate_tag.outputs.sha }} .
+    - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: marcostulio99ti/kabuto-ci-api:${{ steps.generate_tag.outputs.sha }},marcostulio99ti/kabuto-ci-api:latest
 
-    - name: Push image
-      run: docker push marcostulio99ti/kabuto-ci-api:${{ steps.generate_tag.outputs.sha }}
+    # - name: Build docker image
+    #   run: docker build -t marcostulio99ti/kabuto-ci-api:${{ steps.generate_tag.outputs.sha }} .
+
+    # - name: Push image
+    #   run: docker push marcostulio99ti/kabuto-ci-api:${{ steps.generate_tag.outputs.sha }}
