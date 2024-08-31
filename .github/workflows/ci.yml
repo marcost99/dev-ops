@@ -1,11 +1,14 @@
 #sets the name of action
 name: CI
 
-#sets the moment in that job to be executed
+#trigger: sets the moment in that job to be executed
 on:
   push:
     branches:
       - main
+    strategy:
+      matrix:
+        node: 20
 
 jobs:
   build:
@@ -14,3 +17,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4 #for job to make pull of project
+
+    - name: Setup node | ${{ matrix.node }}}
+      uses: actions/setup-node@v4 #configures the node
+      with: #variables of input of action of node
+        node-version: ${{ matrix.node }}
+        cache: 'yarn'
+    - run: yarn
+    - run: yarn run test
