@@ -58,12 +58,29 @@ jobs:
 
     #uses commands CLI to make the build and push of image in the Amazon ECR
     - name: Build docker image
+      id: build-docker-image
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         TAG: ${{ steps.generate_tag.outputs.sha }}
       run: |
-        docker build -t $REGISTRY/kabuto-ci:$TAG .
-        docker push $REGISTRY/kabuto-ci:$TAG
+        IMAGE=$(echo $REGISTRY/kabuto-ci:$TAG)
+        docker build -t $IMAGE .
+        docker push $IMAGE
+        echo "image=$IMAGE" >> $GITHUB_OUTPUT
+    
+    #uses action of github for to make the deploy in App Runner
+    - name: Deploy to App Runner
+      id: deploy-app-runner
+      uses: awslabs/amazon-app-runner-deploy@main
+      with:
+        service: kabuto-api
+        image: ${{ steps.build-docker-image.outputs.image }}
+        access-role-arn: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
+        region: us-east-2
+        cpu: 1
+        memory: 2
+        port: 3000
+        wait-for-service-stability-seconds: 180
 
     # #uses action of github for to make the login in the Docker Hub
     # - name: Login to Docker Hub
