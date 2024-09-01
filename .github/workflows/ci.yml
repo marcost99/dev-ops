@@ -60,7 +60,7 @@ jobs:
     - name: Build docker image
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        TAG: steps.generate_tag.outputs.sha
+        TAG: ${{ steps.generate_tag.outputs.sha }}
       run: |
         docker build -t $REGISTRY/kabuto-ci:$TAG .
         docker push $REGISTRY/kabuto-ci:$TAG
