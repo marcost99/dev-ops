@@ -53,8 +53,8 @@ jobs:
 
     #uses action of github for to make the login in Amazon ECR
     - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
 
     # #uses action of github for to make the login in the Docker Hub
     # - name: Login to Docker Hub
